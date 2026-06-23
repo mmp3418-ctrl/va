@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+  <title>VANGUARD #35405 | FTC Robotics</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Share+Tech+Mono&family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    /* ===== CSS VARIABLES ===== */
+    :root {
+      --bg-deep: #06090D;
+      --bg-surface: #0D1117;
+      --bg-elevated: #131820;
+      --bg-card: rgba(18, 24, 32, 0.7);
+      --border-subtle: rgba(255, 255, 255, 0.04);
+      --border-muted: rgba(255, 255, 255, 0.08);
+      --border-accent: rgba(160, 170, 190, 0.25);
+      --text-primary: #E8EDF3;
+      --text-secondary: #A8B5C4;
+      --text-muted: #6B7A8D;
+      --accent: #8899B0;
+      --accent-bright: #B8C7D9;
+      --accent-glow: rgba(140, 155, 180, 0.5);
+      --accent-soft: rgba(140, 155, 180, 0.12);
+      --nav-bg: rgba(8, 11, 16, 0.88);
+      --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.5);
+      --shadow-glow: 0 0 40px rgba(140, 155, 180, 0.2);
+      --font-display: 'Orbitron', sans-serif;
+      --font-mono: 'Share Tech Mono', monospace;
+      --font-body: 'Tajawal', 'Cairo', sans-serif;
+      --transition-smooth: cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+
+    /* ===== RESET & BASE ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html {
+      scroll-behavior: smooth;
+      background: var(--bg-deep);
+    }
+    body {
+      background: radial-gradient(ellipse at 50% 0%, #131a24 0%, #0a0e13 50%, #05080c 100%);
+      background-attachment: fixed;
+      font-family: var(--font-body);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    /* ===== SCROLLBAR ===== */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-deep); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent-bright); }
+    ::selection { background: var(--accent); color: #0a0e13; }
+
+    /* ===== GLASS CARDS ===== */
+    .clip-card {
+      clip-path: polygon(12px 0%, 100% 0%, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0% 100%, 0% 12px);
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      transition: all 0.5s var(--transition-smooth);
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      overflow: hidden;
+    }
+    .clip-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent 0%, var(--accent-soft) 100%);
+      opacity: 0;
+      transition: opacity 0.6s ease;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .clip-card:hover::before { opacity: 1; }
+    .clip-card:hover {
+      border-color: var(--border-accent);
+      box-shadow: var(--shadow-lg), var(--shadow-glow);
+      transform: translateY(-6px) scale(1.01);
+    }
+    .clip-card>* { position: relative; z-index: 2; }
+
+    .clip-panel {
+      clip-path: polygon(0% 0%, 98% 0%, 100% 3%, 100% 100%, 2% 100%, 0% 97%);
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      transition: all 0.4s ease;
+    }
+    .clip-panel:hover {
+      border-color: var(--border-accent);
+      box-shadow: var(--shadow-glow);
+    }
+
+    /* ===== BUTTONS ===== */
+    .clip-button {
+      clip-path: polygon(10px 0%, 100% 0%, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0% 100%, 0% 10px);
+      background: transparent;
+      border: 1.5px solid var(--border-muted);
+      color: var(--text-primary);
+      font-weight: 600;
+      letter-spacing: 3px;
+      padding: 15px 38px;
+      transition: all 0.45s var(--transition-smooth);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .clip-button::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: var(--accent);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.7s ease, height 0.7s ease;
+      z-index: -1;
+    }
+    .clip-button:hover::after { width: 400px; height: 400px; }
+    .clip-button:hover {
+      background: var(--accent-bright);
+      color: #0a0e13;
+      border-color: transparent;
+      box-shadow: 0 0 50px var(--accent-glow), 0 15px 30px rgba(0, 0, 0, 0.4);
+      transform: translateY(-4px);
+    }
+
+    /* ===== NAVIGATION ===== */
+    .nav-glass {
+      background: var(--nav-bg);
+      border-bottom: 1px solid var(--border-subtle);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+    }
+    .nav-link {
+      position: relative;
+      transition: color 0.3s ease;
+      font-weight: 500;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 1.5px;
+      background: var(--accent-bright);
+      transition: width 0.4s var(--transition-smooth);
+      box-shadow: 0 0 10px var(--accent-glow);
+    }
+    .nav-link:hover::after { width: 70%; }
+    .nav-link:hover { color: var(--accent-bright); }
+
+    /* ===== LOGO ===== */
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .logo-img {
+      width: 55px;
+      height: 55px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 20px var(--accent-glow));
+      transition: all 0.4s ease;
+      display: block;
+      background: transparent !important;
+    }
+    .logo-img:hover {
+      filter: drop-shadow(0 0 40px var(--accent-glow)) brightness(1.2);
+      transform: scale(1.08) rotate(-3deg);
+    }
+    .logo-text {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 1.6rem;
+      letter-spacing: 3px;
+      background: linear-gradient(90deg, var(--text-primary) 0%, var(--accent-bright) 50%, var(--text-primary) 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmer 4s linear infinite;
+    }
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    /* ===== HERO LOGO ===== */
+    .hero-logo {
+      width: 260px;
+      height: 260px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 40px var(--accent-glow));
+      transition: all 0.6s ease;
+      background: transparent !important;
+    }
+    .hero-logo:hover {
+      filter: drop-shadow(0 0 80px var(--accent-glow)) brightness(1.1);
+      transform: scale(1.03);
+    }
+
+    /* ===== INSTAGRAM ICON ===== */
+    .icon-insta {
+      width: 22px;
+      height: 22px;
+      display: inline-block;
+      border: 2px solid currentColor;
+      border-radius: 7px;
+      transition: all 0.4s ease;
+      position: relative;
+    }
+    .icon-insta::after {
+      content: '';
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: 10px;
+      height: 10px;
+      border: 2px solid currentColor;
+      border-radius: 50%;
+      transition: all 0.4s ease;
+    }
+    .clip-button:hover .icon-insta {
+      transform: scale(1.2) rotate(10deg);
+      border-radius: 10px;
+    }
+
+    /* ============================================================
+       ANIMATIONS
+       ============================================================ */
+    @keyframes floatLogo {
+      0%, 100% { transform: translateY(0) scale(1); filter: drop-shadow(0 0 30px var(--accent-glow)); }
+      30% { transform: translateY(-18px) scale(1.06); filter: drop-shadow(0 0 60px var(--accent-glow)); }
+      60% { transform: translateY(10px) scale(0.96); filter: drop-shadow(0 0 35px var(--accent-glow)); }
+    }
+    .animate-float-logo { animation: floatLogo 6s infinite var(--transition-smooth); }
+
+    @keyframes glitch {
+      0%, 100% { text-shadow: 3px 0 0 var(--accent), -3px 0 0 var(--text-secondary); }
+      25% { text-shadow: -3px 3px 0 var(--accent), 3px -3px 0 var(--text-secondary); }
+      50% { text-shadow: 3px -2px 0 var(--accent), -2px 3px 0 var(--text-secondary); }
+      75% { text-shadow: -2px -2px 0 var(--accent), 2px 2px 0 var(--text-secondary); }
+    }
+    .glitch-text { animation: glitch 3s infinite steps(1); }
+
+    @keyframes scanLine {
+      0% { background-position: 0% 0%; }
+      100% { background-position: 0% 100%; }
+    }
+    .scan-effect::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 3;
+      background: linear-gradient(180deg, transparent 0%, rgba(180, 200, 220, 0.06) 8%, transparent 16%);
+      background-size: 100% 200%;
+      animation: scanLine 6s linear infinite;
+    }
+
+    @keyframes breathe {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+    .animate-breathe { animation: breathe 4s ease-in-out infinite; }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .anim-slide-up { animation: slideUp 0.8s var(--transition-smooth) forwards; }
+
+    @keyframes popIn {
+      0% { opacity: 0; transform: scale(0.8); }
+      70% { transform: scale(1.03); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    .anim-pop-in { animation: popIn 0.7s var(--transition-smooth) forwards; }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .anim-fade-down { animation: fadeDown 0.8s var(--transition-smooth) forwards; }
+
+    @keyframes spinSlow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .anim-spin-slow { animation: spinSlow 30s linear infinite; }
+
+    @keyframes particleDrift {
+      0% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+      50% { transform: translate(30px, -40px) scale(1.4); opacity: 0.6; }
+      100% { transform: translate(-20px, -80px) scale(0.8); opacity: 0; }
+    }
+    .anim-particle { animation: particleDrift 8s ease-in-out infinite; }
+
+    @keyframes shimmerText {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    .shimmer-text {
+      background: linear-gradient(90deg, var(--text-primary) 0%, var(--accent-bright) 30%, var(--text-primary) 60%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmerText 4s linear infinite;
+    }
+
+    @keyframes neonPulse {
+      0%, 100% { box-shadow: 0 0 5px var(--accent-glow), 0 0 15px var(--accent-glow); }
+      50% { box-shadow: 0 0 20px var(--accent-bright), 0 0 40px var(--accent-glow); }
+    }
+    .neon-pulse { animation: neonPulse 3s ease-in-out infinite; }
+
+    @keyframes fadeInScroll {
+      from { opacity: 0; transform: translateY(40px) scale(0.95); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .anim-fade-scroll { animation: fadeInScroll 0.9s var(--transition-smooth) forwards; }
+
+    @keyframes rotateGlow {
+      0% { transform: rotate(0deg) scale(1); opacity: 0.1; }
+      50% { opacity: 0.3; }
+      100% { transform: rotate(360deg) scale(1.2); opacity: 0.1; }
+    }
+    .rotate-glow { animation: rotateGlow 20s linear infinite; }
+
+    /* ===== MOBILE MENU ===== */
+    .mobile-menu {
+      transition: all 0.5s var(--transition-smooth);
+      clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 100% 0%, 0% 0%);
+      opacity: 0;
+      visibility: hidden;
+    }
+    .mobile-menu.open {
+      clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 100% 100%, 0% 100%);
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* ===== UTILITY ===== */
+    .ltr { direction: ltr; text-align: left; }
+    .font-display { font-family: var(--font-display); }
+    .font-mono { font-family: var(--font-mono); }
+    .img-placeholder {
+      background: var(--bg-elevated);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      font-weight: 900;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .logo-img { width: 48px; height: 48px; }
+      .logo-text { font-size: 1.3rem; }
+      .hero-logo { width: 220px; height: 220px; }
+    }
+    @media (max-width: 768px) {
+      .clip-button { padding: 12px 28px; font-size: 0.78rem; letter-spacing: 2px; }
+      .clip-card { clip-path: polygon(8px 0%, 100% 0%, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0% 100%, 0% 8px); }
+      .clip-panel { clip-path: polygon(0% 0%, 96% 0%, 100% 4%, 100% 100%, 4% 100%, 0% 96%); }
+      .logo-img { width: 42px; height: 42px; }
+      .logo-text { font-size: 1.1rem; letter-spacing: 2px; }
+      .hero-logo { width: 180px; height: 180px; }
+    }
+    @media (max-width: 480px) {
+      .logo-img { width: 36px; height: 36px; }
+      .logo-text { font-size: 0.9rem; letter-spacing: 1px; }
+      .hero-logo { width: 150px; height: 150px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; }
+      .clip-card:hover { transform: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== PARTICLES ===== -->
+  <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+    <div class="absolute top-1/4 left-10 w-2 h-2 bg-[var(--accent)] rounded-full anim-particle" style="animation-delay: 0s;"></div>
+    <div class="absolute top-1/3 right-20 w-1.5 h-1.5 bg-[var(--accent-bright)] rounded-full anim-particle" style="animation-delay: 2s;"></div>
+    <div class="absolute bottom-1/4 left-1/3 w-1 h-1 bg-[var(--accent)] rounded-full anim-particle" style="animation-delay: 4s;"></div>
+    <div class="absolute top-2/3 right-1/4 w-2 h-2 bg-[var(--accent-bright)] rounded-full anim-particle" style="animation-delay: 6s;"></div>
+  </div>
+
+  <!-- ===== GLOW ORB ===== -->
+  <div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] pointer-events-none z-0 rotate-glow">
+    <div class="w-full h-full rounded-full border border-[var(--border-muted)] opacity-20"></div>
+  </div>
+
+  <!-- ============================================================
+       NAVIGATION
+       ============================================================ -->
+  <nav class="fixed w-full z-50 top-0 left-0 right-0 px-4 md:px-10 py-3.5 nav-glass flex justify-between items-center">
+    <!-- ====== 🔵 غيّر اسم الملف هنا ====== -->
+    <div class="logo-container">
+      <img src="io-removebg-preview.png" alt="VANGUARD" class="logo-img" 
+           onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22%3E%3Cpolygon points=%22100,10 190,100 100,190 10,100%22 fill=%22%238899B0%22/%3E%3Ctext x=%22100%22 y=%22135%22 text-anchor=%22middle%22 fill=%22%23060A0E%22 font-size=%2290%2２ font-family=%2２Orbitron%２%3EV%3C/text%3E%3C/svg%3E';">
+      <span class="logo-text hidden sm:block">VANGUARD</span>
+    </div>
+
+    <!-- Desktop Menu -->
+    <div class="hidden md:flex items-center gap-8 font-tajawal font-semibold text-sm tracking-wide">
+      <a href="#home" class="nav-link text-[var(--text-secondary)] px-1 py-1">الرئيسية</a>
+      <a href="#about" class="nav-link text-[var(--text-secondary)] px-1 py-1">من نحن</a>
+      <a href="#participations" class="nav-link text-[var(--text-secondary)] px-1 py-1">المشاركات</a>
+      <a href="#other-teams" class="nav-link text-[var(--text-secondary)] px-1 py-1">الفرق الأخرى</a>
+      <a href="#contact" class="nav-link text-[var(--text-secondary)] px-1 py-1">اتصل بنا</a>
+    </div>
+
+    <!-- Mobile Toggle -->
+    <button id="menu-toggle" class="md:hidden text-[var(--text-primary)] p-2 hover:bg-[var(--bg-elevated)] rounded-lg transition" aria-label="القائمة">
+      <div class="w-6 h-0.5 bg-current mb-1.5 transition-transform origin-center"></div>
+      <div class="w-6 h-0.5 bg-current mb-1.5 transition-opacity"></div>
+      <div class="w-6 h-0.5 bg-current transition-transform origin-center"></div>
+    </button>
+  </nav>
+
+  <!-- ===== MOBILE MENU ===== -->
+  <div id="mobile-menu" class="mobile-menu fixed top-[68px] left-0 w-full nav-glass z-40 flex flex-col items-center gap-8 py-14 font-tajawal text-xl font-bold shadow-2xl">
+    <a href="#home" class="text-[var(--text-primary)] hover:text-[var(--accent-bright)] transition">الرئيسية</a>
+    <a href="#about" class="text-[var(--text-primary)] hover:text-[var(--accent-bright)] transition">من نحن</a>
+    <a href="#participations" class="text-[var(--text-primary)] hover:text-[var(--accent-bright)] transition">المشاركات</a>
+    <a href="#other-teams" class="text-[var(--text-primary)] hover:text-[var(--accent-bright)] transition">الفرق الأخرى</a>
+    <a href="#contact" class="text-[var(--text-primary)] hover:text-[var(--accent-bright)] transition">اتصل بنا</a>
+  </div>
+
+  <!-- ============================================================
+       HERO SECTION
+       ============================================================ -->
+  <section id="home" class="relative min-h-screen flex flex-col items-center justify-center text-center px-4 pt-20 overflow-hidden z-10">
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,var(--accent-glow)_0%,transparent_60%)] animate-breathe"></div>
+    <div class="absolute top-1/4 left-10 w-52 h-52 border border-[var(--border-muted)] rounded-full opacity-20 anim-spin-slow"></div>
+    <div class="absolute bottom-1/4 right-10 w-36 h-36 border border-[var(--accent)] rounded-full opacity-15 anim-spin-slow" style="animation-direction: reverse;"></div>
+
+    <div class="relative z-10 flex flex-col items-center anim-pop-in">
+      <!-- ====== 🔵 غيّر اسم الملف هنا ====== -->
+      <img src="io-removebg-preview.png" alt="VANGUARD" class="hero-logo animate-float-logo"
+           onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22%3E%3Cpolygon points=%22100,10 190,100 100,190 10,100%22 fill=%22%238899B0%22/%3E%3Ctext x=%22100%22 y=%22135%22 text-anchor=%22middle%22 fill=%22%23060A0E%22 font-size=%2290%22 font-family=%22Orbitron%22%3EV%3C/text%3E%3C/svg%3E';">
+      
+      <h1 class="text-6xl md:text-8xl font-display font-black text-[var(--text-primary)] tracking-tight ltr glitch-text">VANGUARD</h1>
+      <div class="mt-4 font-mono text-2xl md:text-3xl text-[var(--accent-bright)] border-b border-[var(--border-accent)] pb-2 ltr tracking-[0.3em] neon-pulse">#35405</div>
+      <p class="mt-6 text-base md:text-lg text-[var(--text-muted)] font-cairo max-w-xl leading-relaxed">
+        
+      </p>
+      <div class="mt-14 animate-bounce">
+        <div class="w-5 h-9 border-2 border-[var(--accent)] rounded-full flex justify-center">
+          <div class="w-1.5 h-3 bg-[var(--accent-bright)] rounded-full mt-2 animate-pulse"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       ABOUT SECTION
+       ============================================================ -->
+  <section id="about" class="relative py-28 md:py-40 px-4 md:px-10 max-w-6xl mx-auto z-10">
+    <div class="max-w-3xl mx-auto">
+      <div class="scan-effect relative p-8 md:p-14 clip-panel anim-slide-up">
+        <h2 class="text-3xl md:text-4xl font-display font-bold text-[var(--text-primary)] mb-7 ltr shimmer-text">من نحن</h2>
+        <p class="text-[var(--text-secondary)] text-lg leading-relaxed font-cairo">
+          نحن نخبة من المهندسين والمبرمجين الشباب في
+          <span class="font-bold text-[var(--text-primary)]">طرابلس، ليبيا</span>
+          نطمح لإعادة تعريف حدود الروبوتات. فريق
+          <span class="font-display text-[var(--accent-bright)] font-bold">VANGUARD #35405</span>
+          هو منصة للابتكار والتصميم الهندسي وحل المشكلات الواقعية.
+          <br><br>
+          نؤمن بأن التكنولوجيا هي المفتاح لمستقبل أفضل، ونسعى من خلال مشاركاتنا في مسابقات
+          <span class="font-bold text-[var(--accent-bright)]">FTC</span>
+          إلى إلهام الجيل القادم من المبدعين والمبتكرين في عالم الروبوتات.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PARTICIPATIONS
+       ============================================================ -->
+  <section id="participations" class="py-28 md:py-36 px-4 md:px-10 max-w-7xl mx-auto z-10">
+    <h2 class="text-3xl md:text-4xl font-display font-bold text-[var(--text-primary)] mb-14 border-l-4 border-[var(--accent-bright)] pl-4 ltr anim-fade-down shimmer-text">المشاركات</h2>
+    <div class="hidden md:grid md:grid-cols-3 gap-8" id="desktop-grid"></div>
+    <div class="md:hidden flex overflow-x-auto gap-5 pb-4 snap-x snap-mandatory" id="mobile-carousel"></div>
+  </section>
+
+  <!-- ============================================================
+       OTHER TEAMS
+       ============================================================ -->
+  <section id="other-teams" class="py-28 md:py-36 px-4 md:px-10 max-w-7xl mx-auto z-10">
+    <h2 class="text-3xl md:text-4xl font-display font-bold text-[var(--text-primary)] mb-14 border-l-4 border-[var(--accent-bright)] pl-4 ltr anim-fade-down shimmer-text">الفرق الأخرى</h2>
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-5" id="other-teams-grid"></div>
+  </section>
+
+  <!-- ============================================================
+       CONTACT
+       ============================================================ -->
+  <section id="contact" class="py-28 md:py-36 px-4 md:px-10 max-w-3xl mx-auto z-10">
+    <h2 class="text-3xl md:text-4xl font-display font-bold text-[var(--text-primary)] mb-14 border-l-4 border-[var(--accent-bright)] pl-4 ltr anim-fade-down shimmer-text">اتصل بنا</h2>
+    <div class="clip-panel p-10 md:p-14 flex flex-col items-center anim-pop-in">
+      <a href="https://www.instagram.com/vanguard_robotics.team?igsh=MzQ1a2czcm1vcHJn" target="_blank" rel="noopener" class="clip-button text-lg">
+        <span class="icon-insta"></span>
+        <span>تابعنا على انستجرام</span>
+      </a>
+      <p class="mt-6 text-[var(--text-muted)] text-sm font-cairo">
+        للاستفسارات والتعاون، تواصل معنا عبر منصاتنا الرسمية
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="text-center py-12 text-[var(--text-muted)] text-xs border-t border-[var(--border-subtle)] z-10 relative">
+    <span class="font-mono tracking-widest">VANGUARD #35405 &copy; 2025</span>
+    <div class="mt-2 text-[var(--text-muted)] opacity-50">
+      <span class="font-mono">Built with precision · FTC Robotics</span>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       JAVASCRIPT
+       ============================================================ -->
+  <script>
+    (() => {
+      'use strict';
+
+      // ============================================================
+      // 🔵 غيّر أسماء الصور هنا (ضع مسار الصور الخاصة بك)
+      // ============================================================
+      const IMAGES = {
+        // شعارات
+        logoNav: 'images/logo-nav.png',
+        logoHero: 'images/logo-hero.png',
+        // صور المشاركات
+        participation1: 'j1.jpeg',
+        participation2: 'j2.jpeg',
+        participation3: 'j3.jpeg',
+        participation4: 'j4.jpeg',
+        participation5: 'j5.jpeg'
+      };
+
+      // ============================================================
+      // DATA
+      // ============================================================
+      const participations = [
+        { image: IMAGES.participation1 },
+        { image: IMAGES.participation2 },
+        { image: IMAGES.participation3 },
+        { image: IMAGES.participation4 },
+        { image: IMAGES.participation5 }
+      ];
+
+      const otherTeams = [
+        'Scorpions', 'Scarlet scorp', 'Taj', 'glitchers', 'Super',
+        'STG', 'cicada', 'air wizards', 'Change', 'Amly tech'
+      ];
+
+      // ============================================================
+      // CREATE PARTICIPATION CARDS
+      // ============================================================
+      const createParticipationCard = (item) => {
+        const card = document.createElement('div');
+        card.className = 'clip-card flex-shrink-0 w-[80vw] md:w-auto snap-center';
+        card.innerHTML = `
+          <div class="h-52 md:h-56 bg-[var(--bg-elevated)] relative overflow-hidden">
+            <img src="${item.image}" alt="مشاركة" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
+                 onerror="this.onerror=null; this.parentNode.classList.add('img-placeholder'); this.parentNode.innerHTML='<span class=\\"text-3xl font-display\\">📸</span>';">
+          </div>
+        `;
+        return card;
+      };
+
+      // Desktop Grid
+      const desktopGrid = document.getElementById('desktop-grid');
+      if (desktopGrid) {
+        participations.forEach((p, i) => {
+          const card = createParticipationCard(p);
+          card.style.animationDelay = `${i * 0.12}s`;
+          card.classList.add('anim-pop-in');
+          desktopGrid.appendChild(card);
+        });
+      }
+
+      // Mobile Carousel
+      const mobileCarousel = document.getElementById('mobile-carousel');
+      if (mobileCarousel) {
+        participations.forEach(p => {
+          mobileCarousel.appendChild(createParticipationCard(p));
+        });
+      }
+
+      // ============================================================
+      // CREATE OTHER TEAMS GRID
+      // ============================================================
+      const teamsGrid = document.getElementById('other-teams-grid');
+      if (teamsGrid) {
+        otherTeams.forEach((team, i) => {
+          const box = document.createElement('div');
+          box.className =
+            'clip-card p-5 text-center font-bold text-[var(--text-primary)] transition-all duration-500 hover:scale-105 hover:border-[var(--border-accent)] cursor-default';
+          box.textContent = team;
+          box.style.animationDelay = `${i * 0.08}s`;
+          box.classList.add('anim-slide-up');
+          teamsGrid.appendChild(box);
+        });
+      }
+
+      // ============================================================
+      // MOBILE MENU TOGGLE
+      // ============================================================
+      const menuToggle = document.getElementById('menu-toggle');
+      const mobileMenu = document.getElementById('mobile-menu');
+
+      if (menuToggle && mobileMenu) {
+        menuToggle.addEventListener('click', () => {
+          const isOpen = mobileMenu.classList.toggle('open');
+          const lines = menuToggle.querySelectorAll('div');
+
+          if (isOpen) {
+            lines[0].style.transform = 'rotate(45deg) translate(5px, 6px)';
+            lines[1].style.opacity = '0';
+            lines[2].style.transform = 'rotate(-45deg) translate(5px, -6px)';
+          } else {
+            lines[0].style.transform = '';
+            lines[1].style.opacity = '';
+            lines[2].style.transform = '';
+          }
+        });
+
+        mobileMenu.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => {
+            mobileMenu.classList.remove('open');
+            const lines = menuToggle.querySelectorAll('div');
+            lines.forEach(d => {
+              d.style.transform = '';
+              d.style.opacity = '';
+            });
+          });
+        });
+      }
+
+      // ============================================================
+      // SMOOTH SCROLL
+      // ============================================================
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          const href = this.getAttribute('href');
+          if (href === '#') return;
+          e.preventDefault();
+          const target = document.querySelector(href);
+          if (target) {
+            window.scrollTo({
+              top: target.getBoundingClientRect().top + window.pageYOffset - 70,
+              behavior: 'smooth'
+            });
+          }
+        });
+      });
+
+      // ============================================================
+      // INTERSECTION OBSERVER
+      // ============================================================
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('anim-fade-scroll');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.clip-card, .clip-panel, #participations h2, #other-teams h2, #contact h2')
+          .forEach(el => {
+            if (!el.classList.contains('anim-pop-in') &&
+              !el.classList.contains('anim-slide-up') &&
+              !el.classList.contains('anim-fade-down')) {
+              observer.observe(el);
+            }
+          });
+      }
+
+      // ============================================================
+      // NAVBAR SCROLL
+      // ============================================================
+      const navbar = document.querySelector('.nav-glass');
+      window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 100) {
+          navbar.style.background = 'rgba(6, 9, 13, 0.95)';
+          navbar.style.borderBottom = '1px solid var(--border-accent)';
+        } else {
+          navbar.style.background = 'var(--nav-bg)';
+          navbar.style.borderBottom = '1px solid var(--border-subtle)';
+        }
+      });
+
+      // ============================================================
+      // KEYBOARD SHORTCUTS
+      // ============================================================
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && mobileMenu && mobileMenu.classList.contains('open')) {
+          mobileMenu.classList.remove('open');
+          const lines = menuToggle.querySelectorAll('div');
+          lines.forEach(d => {
+            d.style.transform = '';
+            d.style.opacity = '';
+          });
+        }
+      });
+
+      // ============================================================
+      // CONSOLE
+      // ============================================================
+      console.log('%c VANGUARD #35405 ',
+        'background: #8899B0; color: #06090D; font-size: 20px; font-weight: bold; padding: 10px 20px; border-radius: 4px; font-family: Orbitron, sans-serif;'
+      );
+      console.log('🚀 Follow us on Instagram: @vanguard_robotics.team');
+
+    })();
+  </script>
+
+</body>
+</html>
