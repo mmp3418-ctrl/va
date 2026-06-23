@@ -181,23 +181,51 @@
       align-items: center;
       gap: 12px;
     }
+
+    /* ===== إطار وهاج للشعار في القائمة ===== */
+    .logo-wrapper {
+      padding: 6px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--accent-glow), transparent, var(--accent-glow));
+      background-size: 300% 300%;
+      animation: borderGlow 3s ease-in-out infinite;
+      box-shadow: 0 0 30px var(--accent-glow), inset 0 0 30px var(--accent-glow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.4s ease;
+    }
+
+    .logo-wrapper:hover {
+      box-shadow: 0 0 60px var(--accent-glow), inset 0 0 60px var(--accent-glow);
+      transform: scale(1.05);
+    }
+
+    @keyframes borderGlow {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
     .logo-img {
-      width: 55px;
-      height: 55px;
+      width: 70px;
+      height: 70px;
       object-fit: contain;
-      filter: drop-shadow(0 0 20px var(--accent-glow));
+      filter: drop-shadow(0 0 20px var(--accent-glow)) brightness(1.1);
       transition: all 0.4s ease;
       display: block;
       background: transparent !important;
+      border-radius: 12px;
     }
+
     .logo-img:hover {
-      filter: drop-shadow(0 0 40px var(--accent-glow)) brightness(1.2);
-      transform: scale(1.08) rotate(-3deg);
+      filter: drop-shadow(0 0 40px var(--accent-glow)) brightness(1.3);
+      transform: scale(1.05);
     }
+
     .logo-text {
       font-family: var(--font-display);
       font-weight: 900;
-      font-size: 1.6rem;
+      font-size: 1.8rem;
       letter-spacing: 3px;
       background: linear-gradient(90deg, var(--text-primary) 0%, var(--accent-bright) 50%, var(--text-primary) 100%);
       background-size: 200% auto;
@@ -206,12 +234,37 @@
       background-clip: text;
       animation: shimmer 4s linear infinite;
     }
+
     @keyframes shimmer {
       0% { background-position: -200% 0; }
       100% { background-position: 200% 0; }
     }
 
-    /* ===== HERO LOGO ===== */
+    /* ===== إطار وهاج للشعار في الهيرو ===== */
+    .hero-logo-wrapper {
+      padding: 12px;
+      border-radius: 30px;
+      background: linear-gradient(135deg, var(--accent-glow), transparent 30%, var(--accent-glow) 70%, transparent);
+      background-size: 400% 400%;
+      animation: heroBorderGlow 4s ease-in-out infinite;
+      box-shadow: 0 0 60px var(--accent-glow), inset 0 0 60px var(--accent-glow);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.6s ease;
+      margin-bottom: 8px;
+    }
+
+    .hero-logo-wrapper:hover {
+      box-shadow: 0 0 100px var(--accent-glow), inset 0 0 100px var(--accent-glow);
+      transform: scale(1.02);
+    }
+
+    @keyframes heroBorderGlow {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
     .hero-logo {
       width: 260px;
       height: 260px;
@@ -219,7 +272,9 @@
       filter: drop-shadow(0 0 40px var(--accent-glow));
       transition: all 0.6s ease;
       background: transparent !important;
+      border-radius: 20px;
     }
+
     .hero-logo:hover {
       filter: drop-shadow(0 0 80px var(--accent-glow)) brightness(1.1);
       transform: scale(1.03);
@@ -382,25 +437,41 @@
       font-weight: 900;
     }
 
-    /* ===== RESPONSIVE ===== */
+    /* ============================================================
+       RESPONSIVE
+       ============================================================ */
     @media (max-width: 1024px) {
-      .logo-img { width: 48px; height: 48px; }
-      .logo-text { font-size: 1.3rem; }
+      .logo-img { width: 60px; height: 60px; }
+      .logo-text { font-size: 1.5rem; }
       .hero-logo { width: 220px; height: 220px; }
+      .hero-logo-wrapper { padding: 10px; }
     }
+
     @media (max-width: 768px) {
       .clip-button { padding: 12px 28px; font-size: 0.78rem; letter-spacing: 2px; }
       .clip-card { clip-path: polygon(8px 0%, 100% 0%, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0% 100%, 0% 8px); }
       .clip-panel { clip-path: polygon(0% 0%, 96% 0%, 100% 4%, 100% 100%, 4% 100%, 0% 96%); }
-      .logo-img { width: 42px; height: 42px; }
-      .logo-text { font-size: 1.1rem; letter-spacing: 2px; }
+      .logo-img { width: 55px; height: 55px; }
+      .logo-text { font-size: 1.0rem; letter-spacing: 2px; }
       .hero-logo { width: 180px; height: 180px; }
+      .hero-logo-wrapper { padding: 8px; }
+      /* تصغير اسم VANGUARD في الهاتف */
+      .hero-title {
+        font-size: 3rem !important;
+      }
     }
+
     @media (max-width: 480px) {
-      .logo-img { width: 36px; height: 36px; }
-      .logo-text { font-size: 0.9rem; letter-spacing: 1px; }
+      .logo-img { width: 48px; height: 48px; }
+      .logo-text { font-size: 0.85rem; letter-spacing: 1px; }
       .hero-logo { width: 150px; height: 150px; }
+      .hero-logo-wrapper { padding: 6px; }
+      /* تصغير اسم VANGUARD أكثر في الهواتف الصغيرة */
+      .hero-title {
+        font-size: 2.5rem !important;
+      }
     }
+
     @media (prefers-reduced-motion: reduce) {
       * { animation: none !important; transition: none !important; }
       .clip-card:hover { transform: none !important; }
@@ -426,10 +497,12 @@
        NAVIGATION
        ============================================================ -->
   <nav class="fixed w-full z-50 top-0 left-0 right-0 px-4 md:px-10 py-3.5 nav-glass flex justify-between items-center">
-    <!-- ====== 🔵 غيّر اسم الملف هنا ====== -->
     <div class="logo-container">
-      <img src="io-removebg-preview.png" alt="VANGUARD" class="logo-img" 
-           onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22%3E%3Cpolygon points=%22100,10 190,100 100,190 10,100%22 fill=%22%238899B0%22/%3E%3Ctext x=%22100%22 y=%22135%22 text-anchor=%22middle%22 fill=%22%23060A0E%22 font-size=%2290%2２ font-family=%2２Orbitron%２%3EV%3C/text%3E%3C/svg%3E';">
+      <!-- إطار وهاج للشعار في القائمة -->
+      <div class="logo-wrapper">
+        <img src="io-removebg-preview.png" alt="VANGUARD" class="logo-img" 
+             onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22%3E%3Cpolygon points=%22100,10 190,100 100,190 10,100%22 fill=%22%238899B0%22/%3E%3Ctext x=%22100%22 y=%22135%22 text-anchor=%22middle%22 fill=%22%23060A0E%22 font-size=%2290%22 font-family=%22Orbitron%22%3EV%3C/text%3E%3C/svg%3E';">
+      </div>
       <span class="logo-text hidden sm:block">VANGUARD</span>
     </div>
 
@@ -468,11 +541,14 @@
     <div class="absolute bottom-1/4 right-10 w-36 h-36 border border-[var(--accent)] rounded-full opacity-15 anim-spin-slow" style="animation-direction: reverse;"></div>
 
     <div class="relative z-10 flex flex-col items-center anim-pop-in">
-      <!-- ====== 🔵 غيّر اسم الملف هنا ====== -->
-      <img src="io-removebg-preview.png" alt="VANGUARD" class="hero-logo animate-float-logo"
-           onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22%3E%3Cpolygon points=%22100,10 190,100 100,190 10,100%22 fill=%22%238899B0%22/%3E%3Ctext x=%22100%22 y=%22135%22 text-anchor=%22middle%22 fill=%22%23060A0E%22 font-size=%2290%22 font-family=%22Orbitron%22%3EV%3C/text%3E%3C/svg%3E';">
+      <!-- إطار وهاج للشعار في الهيرو -->
+      <div class="hero-logo-wrapper animate-float-logo">
+        <img src="io-removebg-preview.png" alt="VANGUARD" class="hero-logo"
+             onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22%3E%3Cpolygon points=%22100,10 190,100 100,190 10,100%22 fill=%22%238899B0%22/%3E%3Ctext x=%22100%22 y=%22135%22 text-anchor=%22middle%22 fill=%22%23060A0E%22 font-size=%2290%22 font-family=%22Orbitron%22%3EV%3C/text%3E%3C/svg%3E';">
+      </div>
       
-      <h1 class="text-6xl md:text-8xl font-display font-black text-[var(--text-primary)] tracking-tight ltr glitch-text">VANGUARD</h1>
+      <!-- تصغير اسم VANGUARD في الهواتف -->
+      <h1 class="hero-title text-6xl md:text-8xl font-display font-black text-[var(--text-primary)] tracking-tight ltr glitch-text">VANGUARD</h1>
       <div class="mt-4 font-mono text-2xl md:text-3xl text-[var(--accent-bright)] border-b border-[var(--border-accent)] pb-2 ltr tracking-[0.3em] neon-pulse">#35405</div>
       <p class="mt-6 text-base md:text-lg text-[var(--text-muted)] font-cairo max-w-xl leading-relaxed">
         
@@ -558,13 +634,11 @@
       'use strict';
 
       // ============================================================
-      // 🔵 غيّر أسماء الصور هنا (ضع مسار الصور الخاصة بك)
+      // DATA
       // ============================================================
       const IMAGES = {
-        // شعارات
         logoNav: 'images/logo-nav.png',
         logoHero: 'images/logo-hero.png',
-        // صور المشاركات
         participation1: 'j1.jpeg',
         participation2: 'j2.jpeg',
         participation3: 'j3.jpeg',
@@ -572,9 +646,6 @@
         participation5: 'j5.jpeg'
       };
 
-      // ============================================================
-      // DATA
-      // ============================================================
       const participations = [
         { image: IMAGES.participation1 },
         { image: IMAGES.participation2 },
@@ -603,7 +674,6 @@
         return card;
       };
 
-      // Desktop Grid
       const desktopGrid = document.getElementById('desktop-grid');
       if (desktopGrid) {
         participations.forEach((p, i) => {
@@ -614,7 +684,6 @@
         });
       }
 
-      // Mobile Carousel
       const mobileCarousel = document.getElementById('mobile-carousel');
       if (mobileCarousel) {
         participations.forEach(p => {
@@ -741,9 +810,6 @@
         }
       });
 
-      // ============================================================
-      // CONSOLE
-      // ============================================================
       console.log('%c VANGUARD #35405 ',
         'background: #8899B0; color: #06090D; font-size: 20px; font-weight: bold; padding: 10px 20px; border-radius: 4px; font-family: Orbitron, sans-serif;'
       );
