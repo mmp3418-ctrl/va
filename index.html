@@ -12,9 +12,9 @@
       --bg-deep: #06090D;
       --bg-surface: #0D1117;
       --bg-elevated: #131820;
-      --bg-card: rgba(18, 24, 32, 0.7);
-      --border-subtle: rgba(255, 255, 255, 0.04);
-      --border-muted: rgba(255, 255, 255, 0.08);
+      --bg-card: rgba(18, 24, 32, 0.65);
+      --border-subtle: rgba(255, 255, 255, 0.03);
+      --border-muted: rgba(255, 255, 255, 0.07);
       --border-accent: rgba(160, 170, 190, 0.25);
       --text-primary: #E8EDF3;
       --text-secondary: #A8B5C4;
@@ -60,9 +60,9 @@
     ::-webkit-scrollbar-thumb:hover { background: var(--accent-bright); }
     ::selection { background: var(--accent); color: #0a0e13; }
 
-    /* ===== GLASS CARDS ===== */
+    /* ===== CURVED GLASS CARDS ===== */
     .clip-card {
-      clip-path: polygon(12px 0%, 100% 0%, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0% 100%, 0% 12px);
+      border-radius: 32px 12px 32px 12px;
       background: var(--bg-card);
       border: 1px solid var(--border-subtle);
       backdrop-filter: blur(20px);
@@ -90,8 +90,9 @@
     }
     .clip-card>* { position: relative; z-index: 2; }
 
+    /* ===== CURVED PANEL ===== */
     .clip-panel {
-      clip-path: polygon(0% 0%, 98% 0%, 100% 3%, 100% 100%, 2% 100%, 0% 97%);
+      border-radius: 48px 16px 48px 16px;
       background: var(--bg-card);
       border: 1px solid var(--border-subtle);
       backdrop-filter: blur(20px);
@@ -105,7 +106,7 @@
 
     /* ===== BUTTONS ===== */
     .clip-button {
-      clip-path: polygon(10px 0%, 100% 0%, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0% 100%, 0% 10px);
+      border-radius: 30px 8px 30px 8px;
       background: transparent;
       border: 1.5px solid var(--border-muted);
       color: var(--text-primary);
@@ -181,11 +182,9 @@
       align-items: center;
       gap: 12px;
     }
-
-    /* ===== إطار وهاج للشعار في القائمة ===== */
     .logo-wrapper {
       padding: 6px;
-      border-radius: 16px;
+      border-radius: 24px 8px 24px 8px;
       background: linear-gradient(135deg, var(--accent-glow), transparent, var(--accent-glow));
       background-size: 300% 300%;
       animation: borderGlow 3s ease-in-out infinite;
@@ -195,17 +194,14 @@
       justify-content: center;
       transition: all 0.4s ease;
     }
-
     .logo-wrapper:hover {
       box-shadow: 0 0 60px var(--accent-glow), inset 0 0 60px var(--accent-glow);
       transform: scale(1.05);
     }
-
     @keyframes borderGlow {
       0%, 100% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
     }
-
     .logo-img {
       width: 70px;
       height: 70px;
@@ -214,14 +210,12 @@
       transition: all 0.4s ease;
       display: block;
       background: transparent !important;
-      border-radius: 12px;
+      border-radius: 16px 4px 16px 4px;
     }
-
     .logo-img:hover {
       filter: drop-shadow(0 0 40px var(--accent-glow)) brightness(1.3);
       transform: scale(1.05);
     }
-
     .logo-text {
       font-family: var(--font-display);
       font-weight: 900;
@@ -234,16 +228,15 @@
       background-clip: text;
       animation: shimmer 4s linear infinite;
     }
-
     @keyframes shimmer {
       0% { background-position: -200% 0; }
       100% { background-position: 200% 0; }
     }
 
-    /* ===== إطار وهاج للشعار في الهيرو ===== */
+    /* ===== HERO LOGO ===== */
     .hero-logo-wrapper {
       padding: 12px;
-      border-radius: 30px;
+      border-radius: 48px 16px 48px 16px;
       background: linear-gradient(135deg, var(--accent-glow), transparent 30%, var(--accent-glow) 70%, transparent);
       background-size: 400% 400%;
       animation: heroBorderGlow 4s ease-in-out infinite;
@@ -254,17 +247,14 @@
       transition: all 0.6s ease;
       margin-bottom: 8px;
     }
-
     .hero-logo-wrapper:hover {
       box-shadow: 0 0 100px var(--accent-glow), inset 0 0 100px var(--accent-glow);
       transform: scale(1.02);
     }
-
     @keyframes heroBorderGlow {
       0%, 100% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
     }
-
     .hero-logo {
       width: 260px;
       height: 260px;
@@ -272,9 +262,8 @@
       filter: drop-shadow(0 0 40px var(--accent-glow));
       transition: all 0.6s ease;
       background: transparent !important;
-      border-radius: 20px;
+      border-radius: 32px 8px 32px 8px;
     }
-
     .hero-logo:hover {
       filter: drop-shadow(0 0 80px var(--accent-glow)) brightness(1.1);
       transform: scale(1.03);
@@ -307,8 +296,77 @@
     }
 
     /* ============================================================
-       ANIMATIONS
+       TECH BADGE #35405  (CURVED + TECH TOUCHES)
        ============================================================ */
+    .tech-badge {
+      display: inline-block;
+      padding: 0.4rem 2rem 0.4rem 2rem;
+      border-radius: 60px 16px 60px 16px;
+      background: rgba(20, 28, 38, 0.6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(180, 200, 220, 0.15);
+      box-shadow: 0 0 30px rgba(140, 155, 180, 0.15), inset 0 0 30px rgba(140, 155, 180, 0.05);
+      font-family: var(--font-mono);
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      color: var(--accent-bright);
+      text-shadow: 0 0 12px var(--accent-glow), 0 0 30px rgba(140, 155, 180, 0.2);
+      transition: all 0.4s var(--transition-smooth);
+      position: relative;
+      overflow: hidden;
+    }
+    .tech-badge::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(from 0deg, transparent, rgba(180, 200, 220, 0.03), transparent 30%, rgba(180, 200, 220, 0.05), transparent 60%);
+      animation: spinBadge 10s linear infinite;
+      pointer-events: none;
+    }
+    @keyframes spinBadge {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .tech-badge::after {
+      content: '';
+      position: absolute;
+      inset: 2px;
+      border-radius: 56px 14px 56px 14px;
+      background: linear-gradient(135deg, rgba(140, 155, 180, 0.05), transparent 50%, rgba(140, 155, 180, 0.05));
+      pointer-events: none;
+      z-index: 0;
+    }
+    .tech-badge span {
+      position: relative;
+      z-index: 2;
+      display: inline-block;
+      background: linear-gradient(90deg, #B8C7D9, #E8EDF3, #B8C7D9);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmerText 3s linear infinite;
+    }
+    .tech-badge:hover {
+      transform: scale(1.05) translateY(-3px);
+      border-color: rgba(180, 200, 220, 0.4);
+      box-shadow: 0 0 60px rgba(140, 155, 180, 0.3), inset 0 0 60px rgba(140, 155, 180, 0.1);
+    }
+    /* small screen */
+    @media (max-width: 640px) {
+      .tech-badge {
+        font-size: 1.5rem;
+        padding: 0.3rem 1.5rem;
+        border-radius: 40px 10px 40px 10px;
+      }
+    }
+
+    /* ===== ANIMATIONS ===== */
     @keyframes floatLogo {
       0%, 100% { transform: translateY(0) scale(1); filter: drop-shadow(0 0 30px var(--accent-glow)); }
       30% { transform: translateY(-18px) scale(1.06); filter: drop-shadow(0 0 60px var(--accent-glow)); }
@@ -337,6 +395,7 @@
       background: linear-gradient(180deg, transparent 0%, rgba(180, 200, 220, 0.06) 8%, transparent 16%);
       background-size: 100% 200%;
       animation: scanLine 6s linear infinite;
+      border-radius: inherit;
     }
 
     @keyframes breathe {
@@ -449,16 +508,13 @@
 
     @media (max-width: 768px) {
       .clip-button { padding: 12px 28px; font-size: 0.78rem; letter-spacing: 2px; }
-      .clip-card { clip-path: polygon(8px 0%, 100% 0%, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0% 100%, 0% 8px); }
-      .clip-panel { clip-path: polygon(0% 0%, 96% 0%, 100% 4%, 100% 100%, 4% 100%, 0% 96%); }
+      .clip-card { border-radius: 24px 8px 24px 8px; }
+      .clip-panel { border-radius: 32px 10px 32px 10px; }
       .logo-img { width: 55px; height: 55px; }
       .logo-text { font-size: 1.0rem; letter-spacing: 2px; }
       .hero-logo { width: 180px; height: 180px; }
       .hero-logo-wrapper { padding: 8px; }
-      /* تصغير اسم VANGUARD في الهاتف */
-      .hero-title {
-        font-size: 3rem !important;
-      }
+      .hero-title { font-size: 3rem !important; }
     }
 
     @media (max-width: 480px) {
@@ -466,10 +522,7 @@
       .logo-text { font-size: 0.85rem; letter-spacing: 1px; }
       .hero-logo { width: 150px; height: 150px; }
       .hero-logo-wrapper { padding: 6px; }
-      /* تصغير اسم VANGUARD أكثر في الهواتف الصغيرة */
-      .hero-title {
-        font-size: 2.5rem !important;
-      }
+      .hero-title { font-size: 2.5rem !important; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -498,7 +551,6 @@
        ============================================================ -->
   <nav class="fixed w-full z-50 top-0 left-0 right-0 px-4 md:px-10 py-3.5 nav-glass flex justify-between items-center">
     <div class="logo-container">
-      <!-- إطار وهاج للشعار في القائمة -->
       <div class="logo-wrapper">
         <img src="io-removebg-preview.png" alt="VANGUARD" class="logo-img" 
              onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22%3E%3Cpolygon points=%22100,10 190,100 100,190 10,100%22 fill=%22%238899B0%22/%3E%3Ctext x=%22100%22 y=%22135%22 text-anchor=%22middle%22 fill=%22%23060A0E%22 font-size=%2290%22 font-family=%22Orbitron%22%3EV%3C/text%3E%3C/svg%3E';">
@@ -541,17 +593,20 @@
     <div class="absolute bottom-1/4 right-10 w-36 h-36 border border-[var(--accent)] rounded-full opacity-15 anim-spin-slow" style="animation-direction: reverse;"></div>
 
     <div class="relative z-10 flex flex-col items-center anim-pop-in">
-      <!-- إطار وهاج للشعار في الهيرو -->
       <div class="hero-logo-wrapper animate-float-logo">
         <img src="io-removebg-preview.png" alt="VANGUARD" class="hero-logo"
              onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22%3E%3Cpolygon points=%22100,10 190,100 100,190 10,100%22 fill=%22%238899B0%22/%3E%3Ctext x=%22100%22 y=%22135%22 text-anchor=%22middle%22 fill=%22%23060A0E%22 font-size=%2290%22 font-family=%22Orbitron%22%3EV%3C/text%3E%3C/svg%3E';">
       </div>
       
-      <!-- تصغير اسم VANGUARD في الهواتف -->
       <h1 class="hero-title text-6xl md:text-8xl font-display font-black text-[var(--text-primary)] tracking-tight ltr glitch-text">VANGUARD</h1>
-      <div class="mt-4 font-mono text-2xl md:text-3xl text-[var(--accent-bright)] border-b border-[var(--border-accent)] pb-2 ltr tracking-[0.3em] neon-pulse">#35405</div>
+      
+      <!-- ===== TECH BADGE #35405 (CURVED + TECH TOUCHES) ===== -->
+      <div class="tech-badge mt-4">
+        <span>#35405</span>
+      </div>
+
       <p class="mt-6 text-base md:text-lg text-[var(--text-muted)] font-cairo max-w-xl leading-relaxed">
-        
+        نخبة الروبوتات · طرابلس · ليبيا
       </p>
       <div class="mt-14 animate-bounce">
         <div class="w-5 h-9 border-2 border-[var(--accent)] rounded-full flex justify-center">
@@ -666,7 +721,7 @@
         const card = document.createElement('div');
         card.className = 'clip-card flex-shrink-0 w-[80vw] md:w-auto snap-center';
         card.innerHTML = `
-          <div class="h-52 md:h-56 bg-[var(--bg-elevated)] relative overflow-hidden">
+          <div class="h-52 md:h-56 bg-[var(--bg-elevated)] relative overflow-hidden rounded-[32px_8px_32px_8px]">
             <img src="${item.image}" alt="مشاركة" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
                  onerror="this.onerror=null; this.parentNode.classList.add('img-placeholder'); this.parentNode.innerHTML='<span class=\\"text-3xl font-display\\">📸</span>';">
           </div>
